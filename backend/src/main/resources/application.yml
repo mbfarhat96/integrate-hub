@@ -1,0 +1,22 @@
+spring:
+  application:
+    name: integratehub-backend
+
+  profiles:
+    active: dev
+
+server:
+  port: 8080
+
+logging:
+  level:
+    root: INFO
+    com.mohsin.integratehub: DEBUG
+
+
+springdoc:
+  api-docs:
+    enabled: true
+  swagger-ui:
+    enabled: true
+    path: /swagger-ui.html
