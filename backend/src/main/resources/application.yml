@@ -13,6 +13,11 @@ logging:
     root: INFO
     com.mohsin.integratehub: DEBUG
 
+integrations:
+  weather:
+    base-url: https://api.example-weather.com
+    api-key: :)
+
 
 springdoc:
   api-docs:
