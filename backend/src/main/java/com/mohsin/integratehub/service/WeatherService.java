@@ -2,6 +2,7 @@ package com.mohsin.integratehub.service;
 
 import com.mohsin.integratehub.dto.ExternalWeatherResponse;
 import com.mohsin.integratehub.dto.WeatherResponse;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
@@ -14,7 +15,7 @@ public class WeatherService {
     public WeatherService(WeatherClient weatherClient) {
         this.weatherClient = weatherClient;
     }
-
+    @Cacheable(cacheNames = "weatherByCity")
     public WeatherResponse getWeatherForCity(String city) {
         ExternalWeatherResponse external = weatherClient.getWeatherByCity(city);
 
