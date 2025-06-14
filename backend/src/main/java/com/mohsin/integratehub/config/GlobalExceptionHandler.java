@@ -1,6 +1,7 @@
 package com.mohsin.integratehub.config;
 
 import com.mohsin.integratehub.dto.ApiError;
+import com.mohsin.integratehub.service.WeatherClientException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.validation.ConstraintViolationException;
 import org.springframework.http.HttpStatus;
@@ -69,5 +70,20 @@ public class GlobalExceptionHandler {
                 List.of()
         );
         return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(error);
+    }
+
+    @ExceptionHandler(WeatherClientException.class)
+    public ResponseEntity<ApiError> handleWeatherClientException(
+            WeatherClientException ex,
+            HttpServletRequest request
+    ) {
+        ApiError error = new ApiError(
+                HttpStatus.SERVICE_UNAVAILABLE.value(),
+                "Weather service unavailable",
+                ex.getMessage(),
+                request.getRequestURI(),
+                List.of()
+        );
+        return ResponseEntity.status(HttpStatus.SERVICE_UNAVAILABLE).body(error);
     }
 }

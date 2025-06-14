@@ -42,10 +42,10 @@ public class WeatherClient {
                     .block();
         } catch (WebClientResponseException ex) {
             log.error("Weather API error: status={}, body={}", ex.getRawStatusCode(), ex.getResponseBodyAsString());
-            throw ex;
+            throw new WeatherClientException("Weather API returned an error response", ex);
         } catch (Exception ex) {
             log.error("Unexpected error calling weather API", ex);
-            throw ex;
+            throw new WeatherClientException("Failed to call weather API", ex);
         }
     }
 }
