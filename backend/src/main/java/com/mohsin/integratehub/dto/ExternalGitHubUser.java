@@ -53,10 +53,6 @@ public class ExternalGitHubUser {
     }
 
     public int getPublicRepos() {
-        return publicPublicRepos();
-    }
-
-    public int publicPublicRepos() {
         return publicRepos;
     }
 
