@@ -33,8 +33,7 @@ public class GitHubClient {
                     .bodyToMono(ExternalGitHubUser.class)
                     .block();
         } catch (WebClientResponseException ex) {
-            log.error("GitHub API error for user={}: status={} body={}",
-                    username, ex.getRawStatusCode(), ex.getResponseBodyAsString());
+            handleGitHubError("user", username, ex);
             throw new GitHubClientException("Error fetching GitHub user", ex);
         }
     }
@@ -49,9 +48,23 @@ public class GitHubClient {
                     .collectList()
                     .block();
         } catch (WebClientResponseException ex) {
-            log.error("GitHub repos error for user={}: status={} body={}",
-                    username, ex.getRawStatusCode(), ex.getResponseBodyAsString());
+            handleGitHubError("repos", username, ex);
             throw new GitHubClientException("Error fetching GitHub repos", ex);
         }
     }
+
+    private void handleGitHubError(String type, String username, WebClientResponseException ex) {
+        int status = ex.getRawStatusCode();
+        String body = ex.getResponseBodyAsString();
+
+        if (status == 403 || status == 429) {
+            log.error("GitHub rate limit reached for {} of {}. status={} body={}",
+                    type, username, status, body);
+        } else {
+            log.error("GitHub API error for {} of {}. status={} body={}",
+                    type, username, status, body);
+        }
+    }
+
+
 }
