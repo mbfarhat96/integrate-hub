@@ -8,7 +8,12 @@ import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Map;
+import java.util.function.Function;
 import java.util.stream.Collectors;
+
+import static java.util.stream.Collectors.counting;
+import static java.util.stream.Collectors.groupingBy;
 
 @Service
 public class GitHubService {
@@ -33,6 +38,8 @@ public class GitHubService {
                 ))
                 .collect(Collectors.toList());
 
+        String topLanguage = calculateTopLanguage(repos);
+
         return new GitHubUserResponse(
                 externalUser.getLogin(),
                 externalUser.getName(),
@@ -40,7 +47,21 @@ public class GitHubService {
                 externalUser.getPublicRepos(),
                 externalUser.getFollowers(),
                 externalUser.getFollowing(),
-                repos
+                repos,
+                topLanguage
         );
+    }
+
+    private String calculateTopLanguage(List<GitHubRepoResponse> repos) {
+        Map<String, Long> counts = repos.stream()
+                .map(GitHubRepoResponse::getLanguage)
+                .filter(lang -> lang != null && !lang.isBlank())
+                .collect(groupingBy(Function.identity(), counting()));
+
+        return counts.entrySet()
+                .stream()
+                .max(Map.Entry.comparingByValue())
+                .map(Map.Entry::getKey)
+                .orElse(null);
     }
 }

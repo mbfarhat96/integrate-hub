@@ -10,12 +10,14 @@ public class GitHubUserResponse {
     private int followers;
     private int following;
     private List<GitHubRepoResponse> repositories;
+    private String topLanguage;
 
     public GitHubUserResponse() {}
 
     public GitHubUserResponse(String username, String name, String avatarUrl,
                               int publicRepos, int followers, int following,
-                              List<GitHubRepoResponse> repositories) {
+                              java.util.List<GitHubRepoResponse> repositories,
+                              String topLanguage) {
         this.username = username;
         this.name = name;
         this.avatarUrl = avatarUrl;
@@ -23,6 +25,15 @@ public class GitHubUserResponse {
         this.followers = followers;
         this.following = following;
         this.repositories = repositories;
+        this.topLanguage = topLanguage;
+    }
+
+    public String getTopLanguage() {
+        return topLanguage;
+    }
+
+    public void setTopLanguage(String topLanguage) {
+        this.topLanguage = topLanguage;
     }
 
     public String getUsername() {
