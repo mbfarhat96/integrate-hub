@@ -17,6 +17,15 @@ integrations:
   weather:
     base-url: https://api.example-weather.com
     api-key: :)
+  github:
+    base-url: https://api.github.com
+
+spring:
+  cache:
+    type: simple
+    cache-names:
+      - weatherByCity
+      - githubUserStats
 
 
 springdoc:
