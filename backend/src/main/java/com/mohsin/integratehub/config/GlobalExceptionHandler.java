@@ -2,6 +2,7 @@ package com.mohsin.integratehub.config;
 
 import com.mohsin.integratehub.dto.ApiError;
 import com.mohsin.integratehub.service.WeatherClientException;
+import com.mohsin.integratehub.service.GitHubClientException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.validation.ConstraintViolationException;
 import org.springframework.http.HttpStatus;
@@ -80,6 +81,21 @@ public class GlobalExceptionHandler {
         ApiError error = new ApiError(
                 HttpStatus.SERVICE_UNAVAILABLE.value(),
                 "Weather service unavailable",
+                ex.getMessage(),
+                request.getRequestURI(),
+                List.of()
+        );
+        return ResponseEntity.status(HttpStatus.SERVICE_UNAVAILABLE).body(error);
+    }
+
+    @ExceptionHandler(GitHubClientException.class)
+    public ResponseEntity<ApiError> handleGitHubClientException(
+            GitHubClientException ex,
+            HttpServletRequest request
+    ) {
+        ApiError error = new ApiError(
+                HttpStatus.SERVICE_UNAVAILABLE.value(),
+                "GitHub service unavailable",
                 ex.getMessage(),
                 request.getRequestURI(),
                 List.of()
