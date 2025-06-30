@@ -1,6 +1,11 @@
 spring:
   application:
     name: integratehub-backend
+  cache:
+    type: simple
+    cache-names:
+      - weatherByCity
+      - githubUserStats
 
   profiles:
     active: dev
@@ -19,14 +24,9 @@ integrations:
     api-key: :)
   github:
     base-url: https://api.github.com
-
-spring:
-  cache:
-    type: simple
-    cache-names:
-      - weatherByCity
-      - githubUserStats
-
+  currency:
+    base-url: https://api.example-currency.com
+    api-key: YOUR_CURRENCY_API_KEY_HERE
 
 springdoc:
   api-docs:
