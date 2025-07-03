@@ -5,9 +5,13 @@ import com.mohsin.integratehub.dto.ExternalCurrencyResponse;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 
+import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.time.LocalDateTime;
 import java.util.Locale;
 import java.util.Map;
+
+import static java.lang.Math.round;
 
 @Service
 public class CurrencyService {
@@ -30,8 +34,11 @@ public class CurrencyService {
             throw new IllegalArgumentException("No rate available for target currency: " + target);
         }
 
-        double rate = rates.get(target);
-        double converted = amount * rate;
+        double rawRate = rates.get(target);
+        double rawConverted = amount * rawRate;
+
+        double rate = round(rawRate, 6);
+        double converted = round(rawConverted, 2);
 
         return new CurrencyConversionResponse(
                 base,
@@ -41,6 +48,7 @@ public class CurrencyService {
                 converted,
                 LocalDateTime.now()
         );
+
     }
 
     private String normalizeCode(String code) {
@@ -48,5 +56,11 @@ public class CurrencyService {
             return null;
         }
         return code.trim().toUpperCase(Locale.ROOT);
+    }
+
+    private double round(double value, int scale) {
+        return BigDecimal.valueOf(value)
+                .setScale(scale, RoundingMode.HALF_UP)
+                .doubleValue();
     }
 }
