@@ -3,6 +3,7 @@ package com.mohsin.integratehub.config;
 import com.mohsin.integratehub.dto.ApiError;
 import com.mohsin.integratehub.service.GitHubClientException;
 import com.mohsin.integratehub.service.WeatherClientException;
+import com.mohsin.integratehub.service.CurrencyClientException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.validation.ConstraintViolationException;
 import org.springframework.http.HttpStatus;
@@ -102,4 +103,20 @@ public class GlobalExceptionHandler {
         );
         return ResponseEntity.status(HttpStatus.SERVICE_UNAVAILABLE).body(error);
     }
+
+    @ExceptionHandler(CurrencyClientException.class)
+    public ResponseEntity<ApiError> handleCurrencyClientException(
+            CurrencyClientException ex,
+            HttpServletRequest request
+    ) {
+        ApiError error = new ApiError(
+                HttpStatus.SERVICE_UNAVAILABLE.value(),
+                "Currency service unavailable",
+                ex.getMessage(),
+                request.getRequestURI(),
+                List.of()
+        );
+        return ResponseEntity.status(HttpStatus.SERVICE_UNAVAILABLE).body(error);
+    }
+
 }
