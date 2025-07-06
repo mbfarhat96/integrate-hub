@@ -28,6 +28,9 @@ integrations:
   currency:
     base-url: https://api.example-currency.com
     api-key: YOUR_CURRENCY_API_KEY_HERE
+    snapshot:
+      base: USD
+      target: PKR
 
 springdoc:
   api-docs:
