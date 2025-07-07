@@ -1,9 +1,9 @@
 package com.mohsin.integratehub.config;
 
 import com.mohsin.integratehub.dto.ApiError;
+import com.mohsin.integratehub.service.CurrencyClientException;
 import com.mohsin.integratehub.service.GitHubClientException;
 import com.mohsin.integratehub.service.WeatherClientException;
-import com.mohsin.integratehub.service.CurrencyClientException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.validation.ConstraintViolationException;
 import org.springframework.http.HttpStatus;

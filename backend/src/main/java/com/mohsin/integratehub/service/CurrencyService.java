@@ -11,8 +11,6 @@ import java.time.LocalDateTime;
 import java.util.Locale;
 import java.util.Map;
 
-import static java.lang.Math.round;
-
 @Service
 public class CurrencyService {
 
