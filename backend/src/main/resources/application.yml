@@ -29,10 +29,15 @@ integrations:
     base-url: https://api.github.com
   currency:
     base-url: https://api.example-currency.com
-    api-key: YOUR_CURRENCY_API_KEY_HERE
+    api-key: :)
     snapshot:
       base: USD
       target: PKR
+  stocks:
+    base-url: https://api.example-stocks.com
+    api-key: :)
+    snapshot:
+      symbol: AAPL
 
 springdoc:
   api-docs:
