@@ -8,7 +8,7 @@ spring:
       - githubUserStats
       - currencyRates
       - stockQuotes
-
+      - newsSearch
 
   profiles:
     active: dev
