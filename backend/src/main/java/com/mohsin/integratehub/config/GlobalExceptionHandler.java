@@ -5,6 +5,7 @@ import com.mohsin.integratehub.service.CurrencyClientException;
 import com.mohsin.integratehub.service.GitHubClientException;
 import com.mohsin.integratehub.service.StockClientException;
 import com.mohsin.integratehub.service.WeatherClientException;
+import com.mohsin.integratehub.service.NewsClientException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.validation.ConstraintViolationException;
 import org.springframework.http.HttpStatus;
@@ -134,5 +135,23 @@ public class GlobalExceptionHandler {
         );
         return ResponseEntity.status(HttpStatus.SERVICE_UNAVAILABLE).body(error);
     }
+
+
+
+    @ExceptionHandler(NewsClientException.class)
+    public ResponseEntity<ApiError> handleNewsClientException(
+            NewsClientException ex,
+            HttpServletRequest request
+    ) {
+        ApiError error = new ApiError(
+                HttpStatus.SERVICE_UNAVAILABLE.value(),
+                "News service unavailable",
+                ex.getMessage(),
+                request.getRequestURI(),
+                List.of()
+        );
+        return ResponseEntity.status(HttpStatus.SERVICE_UNAVAILABLE).body(error);
+    }
+
 
 }
