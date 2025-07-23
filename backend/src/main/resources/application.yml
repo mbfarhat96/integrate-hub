@@ -38,6 +38,11 @@ integrations:
     api-key: :)
     snapshot:
       symbol: AAPL
+  news:
+    base-url: https://api.example-news.com
+    api-key: :)
+    snapshot:
+      query: technology
 
 springdoc:
   api-docs:
