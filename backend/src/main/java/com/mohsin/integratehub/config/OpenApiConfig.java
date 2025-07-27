@@ -17,4 +17,13 @@ public class OpenApiConfig {
                         .version("v1.0.0")
                 );
     }
+
+    @Bean
+    public OpenAPI custom() {
+        return new OpenAPI()
+                .info(new Info()
+                        .title("IntegrateHub API")
+                        .description("Unified integration APIs for weather, GitHub, currency, stocks, and news.")
+                        .version("1.0.0"));
+    }
 }
