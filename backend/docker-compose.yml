@@ -1,0 +1,10 @@
+version: "3.9"
+
+services:
+  integratehub:
+    build: ./backend
+    container_name: integratehub
+    ports:
+      - "8080:8080"
+    environment:
+      SPRING_PROFILES_ACTIVE: prod
