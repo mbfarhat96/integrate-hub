@@ -1,11 +1,13 @@
-spring:
-  config:
-    activate:
-      on-profile: prod
-
 server:
-  port: 8080
+  error:
+    include-message: never
 
 logging:
   level:
-    com.mohsin.integratehub: INFO
+    root: INFO
+
+springdoc:
+  api-docs:
+    enabled: false
+  swagger-ui:
+    enabled: false
