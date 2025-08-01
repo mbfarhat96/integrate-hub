@@ -10,7 +10,6 @@
         Refresh Health
       </button>
     </div>
-
     <div v-if="health" class="card">
       <p>
         <strong>Application:</strong>
