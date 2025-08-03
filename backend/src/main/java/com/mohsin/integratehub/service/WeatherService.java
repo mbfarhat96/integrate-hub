@@ -11,29 +11,25 @@ import java.time.LocalDateTime;
 public class WeatherService {
 
     private final WeatherClient weatherClient;
+    private final GeocodingClient geocodingClient;
 
-    public WeatherService(WeatherClient weatherClient) {
+    public WeatherService(WeatherClient weatherClient,
+                          GeocodingClient geocodingClient) {
         this.weatherClient = weatherClient;
+        this.geocodingClient = geocodingClient;
     }
+
     @Cacheable(cacheNames = "weatherByCity")
     public WeatherResponse getWeatherForCity(String city) {
-        ExternalWeatherResponse external = weatherClient.getWeatherByCity(city);
 
-        if (external == null) {
-            // Simple fallback – in a real app you might throw a custom exception
-            return new WeatherResponse(
-                    city,
-                    null,
-                    0.0,
-                    0.0,
-                    0,
-                    "No data available",
-                    LocalDateTime.now()
-            );
-        }
+        double[] coords = geocodingClient.getCoordinatesForCity(city);
+        double lat = coords[0];
+        double lon = coords[1];
+
+        ExternalWeatherResponse external = weatherClient.getWeatherByCoordinates(lat, lon);
 
         return new WeatherResponse(
-                external.getName(),
+                city,
                 external.getCountry(),
                 external.getTemp(),
                 external.getFeelsLike(),
@@ -43,3 +39,4 @@ public class WeatherService {
         );
     }
 }
+

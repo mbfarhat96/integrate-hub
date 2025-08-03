@@ -23,8 +23,7 @@ logging:
 
 integrations:
   weather:
-    base-url: https://api.example-weather.com
-    api-key: :)
+    base-url: https://api.open-meteo.com/v1/forecast
   github:
     base-url: https://api.github.com
   currency:
