@@ -1,6 +1,7 @@
 package com.mohsin.integratehub.service;
 
 import com.mohsin.integratehub.dto.ExternalWeatherResponse;
+import com.mohsin.integratehub.dto.GeocodingResult;
 import com.mohsin.integratehub.dto.WeatherResponse;
 import org.junit.jupiter.api.Test;
 
@@ -12,6 +13,7 @@ class WeatherServiceTest {
     @Test
     void getWeatherForCity_shouldMapExternalResponseToInternalModel() {
         WeatherClient weatherClient = mock(WeatherClient.class);
+        GeocodingClient geocodingClient = mock(GeocodingClient.class);
 
         ExternalWeatherResponse external = new ExternalWeatherResponse(
                 "Chicago",
@@ -22,9 +24,10 @@ class WeatherServiceTest {
                 "Clear sky"
         );
 
-        when(weatherClient.getWeatherByCity("Chicago")).thenReturn(external);
+        when(geocodingClient.getCoordinatesForCity("Chicago")).thenReturn(new GeocodingResult(41.8781, -87.6298, "US"));
+        when(weatherClient.getWeatherByCoordinates(41.8781, -87.6298)).thenReturn(external);
 
-        WeatherService weatherService = new WeatherService(weatherClient);
+        WeatherService weatherService = new WeatherService(weatherClient, geocodingClient);
 
         WeatherResponse result = weatherService.getWeatherForCity("Chicago");
 

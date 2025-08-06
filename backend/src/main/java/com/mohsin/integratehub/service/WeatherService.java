@@ -1,6 +1,7 @@
 package com.mohsin.integratehub.service;
 
 import com.mohsin.integratehub.dto.ExternalWeatherResponse;
+import com.mohsin.integratehub.dto.GeocodingResult;
 import com.mohsin.integratehub.dto.WeatherResponse;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
@@ -22,15 +23,15 @@ public class WeatherService {
     @Cacheable(cacheNames = "weatherByCity")
     public WeatherResponse getWeatherForCity(String city) {
 
-        double[] coords = geocodingClient.getCoordinatesForCity(city);
-        double lat = coords[0];
-        double lon = coords[1];
+        GeocodingResult geocodingResult = geocodingClient.getCoordinatesForCity(city);
+        double lat = geocodingResult.getLatitude();
+        double lon = geocodingResult.getLongitude();
 
         ExternalWeatherResponse external = weatherClient.getWeatherByCoordinates(lat, lon);
 
         return new WeatherResponse(
                 city,
-                external.getCountry(),
+                geocodingResult.getCountry(),
                 external.getTemp(),
                 external.getFeelsLike(),
                 external.getHumidity(),
@@ -39,4 +40,3 @@ public class WeatherService {
         );
     }
 }
-

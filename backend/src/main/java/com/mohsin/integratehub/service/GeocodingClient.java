@@ -1,5 +1,6 @@
 package com.mohsin.integratehub.service;
 
+import com.mohsin.integratehub.dto.GeocodingResult;
 import org.springframework.stereotype.Component;
 import org.springframework.web.reactive.function.client.WebClient;
 
@@ -15,7 +16,7 @@ public class GeocodingClient {
         this.webClient = builder.build();
     }
 
-    public double[] getCoordinatesForCity(String city) {
+    public GeocodingResult getCoordinatesForCity(String city) {
         String url = "https://geocoding-api.open-meteo.com/v1/search?name=" + city;
 
         Map<String, Object> response = webClient.get()
@@ -36,8 +37,9 @@ public class GeocodingClient {
 
         double lat = ((Number) first.get("latitude")).doubleValue();
         double lon = ((Number) first.get("longitude")).doubleValue();
+        String country = (String) first.getOrDefault("country", "");
 
-        return new double[]{ lat, lon };
+        return new GeocodingResult(lat, lon, country);
     }
-}
 
+}
