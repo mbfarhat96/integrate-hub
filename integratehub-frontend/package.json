@@ -13,8 +13,10 @@
     "vite": "^7.2.4"
   },
   "dependencies": {
+    "@vitejs/plugin-vue": "^6.0.2",
     "axios": "^1.13.2",
     "pinia": "^3.0.4",
     "vue-router": "^4.6.3"
   }
 }
+

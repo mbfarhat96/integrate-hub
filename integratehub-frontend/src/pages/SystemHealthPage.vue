@@ -4,7 +4,6 @@
     <p class="page-subtitle">
       Overview of IntegrateHub backend services and connectivity.
     </p>
-
     <div class="card">
       <button @click="loadHealth" :disabled="ui.loading">
         Refresh Health
