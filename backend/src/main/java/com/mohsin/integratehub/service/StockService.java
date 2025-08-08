@@ -2,11 +2,13 @@ package com.mohsin.integratehub.service;
 
 import com.mohsin.integratehub.dto.ExternalStockResponse;
 import com.mohsin.integratehub.dto.StockQuoteResponse;
+import com.mohsin.integratehub.dto.StockSearchResult;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
 import java.util.Locale;
+import java.util.List;
 
 @Service
 public class StockService {
@@ -38,6 +40,10 @@ public class StockService {
                 round(percentChange, 2),
                 LocalDateTime.now()
         );
+    }
+
+    public List<StockSearchResult> search(String query) {
+        return stockClient.search(query.trim());
     }
 
     private String normalize(String s) {

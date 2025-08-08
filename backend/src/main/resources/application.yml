@@ -33,8 +33,8 @@ integrations:
       base: USD
       target: PKR
   stocks:
-    base-url: https://api.example-stocks.com
-    api-key: :)
+    base-url: https://www.alphavantage.co
+    api-key: Y1G2CB73Q6KQYBMI
     snapshot:
       symbol: AAPL
   news:

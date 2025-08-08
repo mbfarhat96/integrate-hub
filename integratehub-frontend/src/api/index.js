@@ -28,6 +28,8 @@ export const weatherApi = {
     },
 };
 
+
+
 export const githubApi = {
     getUser(username) {
         return apiRequest(() => api.get(`/api/github/user/${username}`));
@@ -49,6 +51,13 @@ export const stockApi = {
         return apiRequest(() =>
             api.get("/api/stocks/quote", {
                 params: { symbol },
+            })
+        );
+    },
+    search(query) {
+        return apiRequest(() =>
+            api.get("/api/stocks/search", {
+                params: { query },
             })
         );
     },
