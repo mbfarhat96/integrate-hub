@@ -7,6 +7,12 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 import org.springframework.web.reactive.function.client.WebClient;
 import org.springframework.web.reactive.function.client.WebClientResponseException;
+import org.springframework.web.util.UriComponentsBuilder;
+
+import java.util.Objects;
+import java.util.Optional;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 @Component
 public class CurrencyClient {
@@ -18,24 +24,48 @@ public class CurrencyClient {
     private final String apiKey;
 
     public CurrencyClient(WebClient.Builder builder,
-                          @Value("${integrations.currency.base-url:https://api.example-currency.com}") String baseUrl,
-                          @Value("${integrations.currency.api-key:demo-key}") String apiKey) {
+                          @Value("${integrations.currency.base-url:http://api.exchangeratesapi.io/v1}") String baseUrl,
+                          @Value("${integrations.currency.api-key:}") String apiKey) {
         this.webClient = builder.build();
         this.baseUrl = baseUrl;
         this.apiKey = apiKey;
     }
 
-    public ExternalCurrencyResponse getRates(String base) {
+    public ExternalCurrencyResponse getRates(String fromCurrency, String toCurrency) {
         try {
-            log.info("Calling currency API for base={}", base);
-            return webClient.get()
-                    .uri(baseUrl + "/latest?base=" + base + "&apikey=" + apiKey)
+            log.info("Calling currency API for from={} to={}", fromCurrency, toCurrency);
+
+            String symbols = Stream.of(fromCurrency, toCurrency)
+                    .filter(Objects::nonNull)
+                    .map(String::trim)
+                    .filter(s -> !s.isEmpty())
+                    .distinct()
+                    .collect(Collectors.joining(","));
+
+            UriComponentsBuilder uriBuilder = UriComponentsBuilder.fromHttpUrl(baseUrl)
+                    .path("/latest")
+                    .queryParamIfPresent("access_key", apiKey == null || apiKey.isBlank() ? Optional.empty() : Optional.of(apiKey));
+
+            if (!symbols.isEmpty()) {
+                uriBuilder.queryParam("symbols", symbols);
+            }
+
+            String url = uriBuilder.toUriString();
+
+            ExternalCurrencyResponse response = webClient.get()
+                    .uri(url)
                     .retrieve()
                     .bodyToMono(ExternalCurrencyResponse.class)
                     .block();
+
+            if (response == null || response.getRates() == null) {
+                throw new CurrencyClientException("Currency API returned no rates");
+            }
+
+            return response;
         } catch (WebClientResponseException ex) {
-            log.error("Currency API error for base={}: status={} body={}",
-                    base, ex.getRawStatusCode(), ex.getResponseBodyAsString());
+            log.error("Currency API error for from={} to={}: status={} body={}",
+                    fromCurrency, toCurrency, ex.getRawStatusCode(), ex.getResponseBodyAsString());
             throw new CurrencyClientException("Error fetching currency rates", ex);
         } catch (Exception ex) {
             log.error("Unexpected error calling currency API", ex);

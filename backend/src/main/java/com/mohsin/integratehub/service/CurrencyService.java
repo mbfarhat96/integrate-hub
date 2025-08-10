@@ -25,14 +25,23 @@ public class CurrencyService {
         String base = normalizeCode(from);
         String target = normalizeCode(to);
 
-        ExternalCurrencyResponse external = currencyClient.getRates(base);
+        ExternalCurrencyResponse external = currencyClient.getRates(base, target);
         Map<String, Double> rates = external.getRates();
 
         if (rates == null || !rates.containsKey(target)) {
             throw new IllegalArgumentException("No rate available for target currency: " + target);
         }
 
-        double rawRate = rates.get(target);
+        double targetRate = rates.get(target);
+        double baseRate = external.getBase() != null && external.getBase().equalsIgnoreCase(base)
+                ? 1.0
+                : rates.getOrDefault(base, 0.0);
+
+        if (baseRate == 0.0) {
+            throw new IllegalArgumentException("No rate available for base currency: " + base);
+        }
+
+        double rawRate = baseRate == 1.0 ? targetRate : targetRate / baseRate;
         double rawConverted = amount * rawRate;
 
         double rate = round(rawRate, 6);

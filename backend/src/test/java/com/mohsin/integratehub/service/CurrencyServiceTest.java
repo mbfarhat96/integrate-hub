@@ -13,16 +13,19 @@ import static org.mockito.Mockito.*;
 class CurrencyServiceTest {
 
     @Test
-    void convert_shouldUseRateAndReturnRoundedValues() {
+    void convert_shouldComputeCrossRateWhenApiBaseIsDifferent() {
         CurrencyClient client = mock(CurrencyClient.class);
 
         ExternalCurrencyResponse external = new ExternalCurrencyResponse(
-                "USD",
+                "EUR",
                 LocalDateTime.now().toLocalDate().toString(),
-                Map.of("PKR", 278.123456)
+                Map.of(
+                        "USD", 1.1,
+                        "PKR", 300.0
+                )
         );
 
-        when(client.getRates("USD")).thenReturn(external);
+        when(client.getRates("USD", "PKR")).thenReturn(external);
 
         CurrencyService service = new CurrencyService(client);
 
@@ -31,8 +34,8 @@ class CurrencyServiceTest {
         assertEquals("USD", result.getFromCurrency());
         assertEquals("PKR", result.getToCurrency());
         assertEquals(10.0, result.getAmount());
-        assertEquals(278.123456, result.getRate(), 0.000001);
-        assertEquals(2781.23, result.getConvertedAmount(), 0.000001);
+        assertEquals(272.727273, result.getRate(), 0.000001);
+        assertEquals(2727.27, result.getConvertedAmount(), 0.000001);
         assertNotNull(result.getFetchedAt());
     }
 }

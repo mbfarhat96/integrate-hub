@@ -27,8 +27,8 @@ integrations:
   github:
     base-url: https://api.github.com
   currency:
-    base-url: https://api.example-currency.com
-    api-key: :)
+    base-url: http://api.exchangeratesapi.io/v1
+    api-key: "81f7ee73b188517a571167be573eb2cf"
     snapshot:
       base: USD
       target: PKR
