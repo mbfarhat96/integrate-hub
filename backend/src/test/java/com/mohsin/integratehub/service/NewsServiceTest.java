@@ -31,11 +31,7 @@ class NewsServiceTest {
                 "Reuters"
         );
 
-        ExternalNewsResponse external = new ExternalNewsResponse(
-                "ok",
-                2,
-                List.of(a1, a2)
-        );
+        ExternalNewsResponse external = new ExternalNewsResponse(2, List.of(a1, a2));
 
         when(client.searchNews("tesla")).thenReturn(external);
 

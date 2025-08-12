@@ -38,8 +38,8 @@ integrations:
     snapshot:
       symbol: AAPL
   news:
-    base-url: https://api.example-news.com
-    api-key: :)
+    base-url: https://gnews.io/api/v4
+    api-key: a8c6409a9c1dea7d4ee83fb66aa00bac
     snapshot:
       query: technology
 

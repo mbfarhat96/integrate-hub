@@ -4,6 +4,7 @@ import com.mohsin.integratehub.dto.ExternalNewsArticle;
 import com.mohsin.integratehub.dto.ExternalNewsResponse;
 import com.mohsin.integratehub.dto.NewsArticleResponse;
 import com.mohsin.integratehub.dto.NewsSearchResponse;
+import com.mohsin.integratehub.service.NewsClient;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 
@@ -27,7 +28,11 @@ public class NewsService {
 
         ExternalNewsResponse external = newsClient.searchNews(normalized);
 
-        List<NewsArticleResponse> mapped = external.getArticles().stream()
+        List<ExternalNewsArticle> articles = external != null && external.getArticles() != null
+                ? external.getArticles()
+                : List.of();
+
+        List<NewsArticleResponse> mapped = articles.stream()
                 .filter(a -> a.getTitle() != null && !a.getTitle().isBlank())
                 .map(this::mapArticle)
                 .distinct()
@@ -51,7 +56,7 @@ public class NewsService {
                 a.getTitle(),
                 desc,
                 a.getUrl(),
-                a.getSource()
+                a.getSourceName()
         );
     }
 

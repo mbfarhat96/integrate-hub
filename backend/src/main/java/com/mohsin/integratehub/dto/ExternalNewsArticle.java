@@ -5,24 +5,25 @@ public class ExternalNewsArticle {
     private String title;
     private String description;
     private String url;
-    private String source;
+    private ExternalNewsSource source;
 
     public ExternalNewsArticle() {}
 
-    public ExternalNewsArticle(String title, String description, String url, String source) {
+    public ExternalNewsArticle(String title, String description, String url, String sourceName) {
         this.title = title;
         this.description = description;
         this.url = url;
-        this.source = source;
+        this.source = new ExternalNewsSource(sourceName);
     }
 
     public String getTitle() { return title; }
     public String getDescription() { return description; }
     public String getUrl() { return url; }
-    public String getSource() { return source; }
+    public ExternalNewsSource getSource() { return source; }
+    public String getSourceName() { return source != null ? source.getName() : null; }
 
     public void setTitle(String title) { this.title = title; }
     public void setDescription(String description) { this.description = description; }
     public void setUrl(String url) { this.url = url; }
-    public void setSource(String source) { this.source = source; }
+    public void setSource(ExternalNewsSource source) { this.source = source; }
 }

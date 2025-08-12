@@ -1,6 +1,7 @@
 package com.mohsin.integratehub.service;
 
 import com.mohsin.integratehub.dto.ExternalNewsResponse;
+import com.mohsin.integratehub.service.NewsClientException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
@@ -18,10 +19,10 @@ public class NewsClient {
     private final String apiKey;
 
     public NewsClient(WebClient.Builder builder,
-                      @Value("${integrations.news.base-url:https://api.example-news.com}") String baseUrl,
-                      @Value("${integrations.news.api-key:demo-key}") String apiKey) {
+                      @Value("${integrations.news.base-url:https://gnews.io/api/v4}") String baseUrl,
+                      @Value("${integrations.news.api-key:demo}") String apiKey) {
 
-        this.webClient = builder.build();
+        this.webClient = builder.baseUrl(baseUrl).build();
         this.baseUrl = baseUrl;
         this.apiKey = apiKey;
     }
@@ -30,7 +31,13 @@ public class NewsClient {
         try {
             log.info("Calling News API for query={}", query);
             return webClient.get()
-                    .uri(baseUrl + "/search?q=" + query + "&apikey=" + apiKey)
+                    .uri(uriBuilder -> uriBuilder
+                            .path("/search")
+                            .queryParam("q", query)
+                            .queryParam("lang", "en")
+                            .queryParam("max", 20)
+                            .queryParam("token", apiKey)
+                            .build())
                     .retrieve()
                     .bodyToMono(ExternalNewsResponse.class)
                     .block();
