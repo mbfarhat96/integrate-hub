@@ -1,6 +1,3 @@
-+54
--57
-
 # Integrate Hub
 
 Integrate Hub is a single-page dashboard that bundles multiple public APIs behind one Spring Boot backend and a Vite/Vue frontend. Users can search stocks, convert currencies, check weather by city, view developer GitHub stats, and read current news results through a single UI and API surface.
