@@ -1,8 +1,10 @@
 package com.mohsin.integratehub.service;
 
-import com.mohsin.integratehub.dto.ExternalNewsArticle;
-import com.mohsin.integratehub.dto.ExternalNewsResponse;
-import com.mohsin.integratehub.dto.NewsSearchResponse;
+import com.mohsin.integratehub.features.news.NewsClient;
+import com.mohsin.integratehub.features.news.NewsService;
+import com.mohsin.integratehub.features.news.dto.ExternalNewsArticle;
+import com.mohsin.integratehub.features.news.dto.ExternalNewsResponse;
+import com.mohsin.integratehub.features.news.dto.NewsSearchResponse;
 import org.junit.jupiter.api.Test;
 
 import java.util.List;

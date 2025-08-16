@@ -1,7 +1,8 @@
 package com.mohsin.integratehub.controller;
 
-import com.mohsin.integratehub.dto.WeatherResponse;
-import com.mohsin.integratehub.service.WeatherService;
+import com.mohsin.integratehub.features.weather.WeatherController;
+import com.mohsin.integratehub.features.weather.dto.WeatherResponse;
+import com.mohsin.integratehub.features.weather.WeatherService;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;

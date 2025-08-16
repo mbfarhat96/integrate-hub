@@ -1,7 +1,9 @@
 package com.mohsin.integratehub.service;
 
-import com.mohsin.integratehub.dto.ExternalStockResponse;
-import com.mohsin.integratehub.dto.StockQuoteResponse;
+import com.mohsin.integratehub.features.stocks.StockClient;
+import com.mohsin.integratehub.features.stocks.StockService;
+import com.mohsin.integratehub.features.stocks.dto.ExternalStockResponse;
+import com.mohsin.integratehub.features.stocks.dto.StockQuoteResponse;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;

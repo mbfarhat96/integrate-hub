@@ -1,8 +1,11 @@
 package com.mohsin.integratehub.service;
 
-import com.mohsin.integratehub.dto.ExternalWeatherResponse;
-import com.mohsin.integratehub.dto.GeocodingResult;
-import com.mohsin.integratehub.dto.WeatherResponse;
+import com.mohsin.integratehub.features.weather.GeocodingClient;
+import com.mohsin.integratehub.features.weather.WeatherClient;
+import com.mohsin.integratehub.features.weather.WeatherService;
+import com.mohsin.integratehub.features.weather.dto.ExternalWeatherResponse;
+import com.mohsin.integratehub.features.weather.dto.GeocodingResult;
+import com.mohsin.integratehub.features.weather.dto.WeatherResponse;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;

@@ -1,7 +1,9 @@
 package com.mohsin.integratehub.service;
 
-import com.mohsin.integratehub.dto.CurrencyConversionResponse;
-import com.mohsin.integratehub.dto.ExternalCurrencyResponse;
+import com.mohsin.integratehub.features.currency.CurrencyClient;
+import com.mohsin.integratehub.features.currency.CurrencyService;
+import com.mohsin.integratehub.features.currency.dto.CurrencyConversionResponse;
+import com.mohsin.integratehub.features.currency.dto.ExternalCurrencyResponse;
 import org.junit.jupiter.api.Test;
 
 import java.time.LocalDateTime;

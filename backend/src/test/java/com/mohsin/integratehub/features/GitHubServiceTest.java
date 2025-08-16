@@ -1,8 +1,10 @@
 package com.mohsin.integratehub.service;
 
-import com.mohsin.integratehub.dto.ExternalGitHubRepo;
-import com.mohsin.integratehub.dto.ExternalGitHubUser;
-import com.mohsin.integratehub.dto.GitHubUserResponse;
+import com.mohsin.integratehub.features.github.GitHubClient;
+import com.mohsin.integratehub.features.github.GitHubService;
+import com.mohsin.integratehub.features.github.dto.ExternalGitHubRepo;
+import com.mohsin.integratehub.features.github.dto.ExternalGitHubUser;
+import com.mohsin.integratehub.features.github.dto.GitHubUserResponse;
 import org.junit.jupiter.api.Test;
 
 import java.util.List;
